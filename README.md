@@ -10,7 +10,9 @@ The python module named `backend` should launch a web server on port 5004 servin
 
     python3 -m backend
 
-> Prerequisites : 2 running redis servers
+# Prerequisites : 
+- 2 running redis servers
+
 
 Parameters list that can be set through environment variables:
 
@@ -31,16 +33,20 @@ The complete build process requires 2 steps :
 ## build pip module
 
     rm dist/*
-    python3 -m build .
+    python3 setup.py bdist_wheel --universal
+    
 
 ## install pip module locally
 
-    python3 -m venv .testenv
-    source .testenv/bin/activate
     python3 -m pip install --no-cache-dir \
     --index-url="https://artifacts.cloud.mov.ai/repository/pypi-experimental/simple" \
     --extra-index-url https://pypi.org/simple \
     ./dist/*.whl
+
+This will install all dependencies, including MOVAI modules such as:
+- movai_core_shared - https://github.com/xsoulp/movai-core-shared
+- gd_node  - https://github.com/xsoulp/gd-node
+- dal - https://github.com/xsoulp/data-access-layer
 
 ## build docker images
 
